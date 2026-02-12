@@ -5,6 +5,9 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const customerRoutes = require('./routes/customers');
+const ticketRoutes = require('./routes/tickets');
+const subscriptionRoutes = require('./routes/subscriptions');
+
 const errorHandler = require('./middlewares/errorHandler');
 
 
@@ -19,7 +22,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/customers', customerRoutes);
-
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 app.use(errorHandler);
 
