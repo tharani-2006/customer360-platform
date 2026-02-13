@@ -5,11 +5,10 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const customerRoutes = require('./routes/customers');
-const ticketRoutes = require('./routes/tickets');
 const subscriptionRoutes = require('./routes/subscriptions');
-
+const ticketRoutes = require('./routes/tickets');
+const analyticsRoutes = require('./routes/analytics');
 const errorHandler = require('./middlewares/errorHandler');
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +23,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 app.use(errorHandler);
 
