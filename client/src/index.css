@@ -1,68 +1,58 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* Omind-style theme – brand green, dark accent, yellow badge */
+@theme {
+  /* Primary brand green #26B24D */
+  --color-primary: #26B24D;
+  --color-primary-dark: #1f8f3d;
+  /* Dark accent green #123B1E */
+  --color-accent-dark: #123B1E;
+  --color-accent-dark-light: #164728;
+  /* Accent yellow #FFE600 */
+  --color-badge-yellow: #FFE600;
+  --color-badge-yellow-dark: #e6cf00;
+  /* Neutrals */
+  --color-surface-white: #FFFFFF;
+  --color-surface-gray: #F8F9FA;
+  --color-ink: #212121;
+  --color-ink-light: #4a4a4a;
+  --color-ink-muted: #6b7280;
+  /* Font – clean sans-serif */
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Radius */
+  --radius-card: 1rem;
+  --radius-button: 0.5rem;
+  --radius-badge: 9999px;
+  /* Shadow */
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  html {
+    @apply antialiased;
   }
-  a:hover {
-    color: #747bff;
+  body {
+    @apply bg-surface-white text-ink font-sans min-h-screen;
   }
-  button {
-    background-color: #f9f9f9;
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-ink font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold px-5 py-2.5 rounded-button hover:bg-primary-dark transition-colors;
+  }
+  .btn-secondary {
+    @apply bg-accent-dark text-white font-semibold px-5 py-2.5 rounded-button hover:bg-accent-dark-light transition-colors;
+  }
+  .badge-yellow {
+    @apply bg-badge-yellow text-ink px-3 py-1 rounded-badge text-sm font-medium;
+  }
+  .card-panel {
+    @apply bg-accent-dark text-white rounded-card p-6 shadow-card;
+  }
+  .heading-hero {
+    @apply text-primary font-bold text-2xl md:text-3xl;
   }
 }
