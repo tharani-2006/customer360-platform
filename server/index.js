@@ -8,6 +8,7 @@ const customerRoutes = require('./routes/customers');
 const subscriptionRoutes = require('./routes/subscriptions');
 const ticketRoutes = require('./routes/tickets');
 const analyticsRoutes = require('./routes/analytics');
+const auditRoutes = require('./routes/audit');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/api/customers', customerRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/audit', auditRoutes);
 
 app.use(errorHandler);
 
