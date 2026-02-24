@@ -9,6 +9,7 @@ import CustomerManagement from './pages/CustomerManagement';
 import SubscriptionManagement from './pages/SubscriptionManagement';
 import TicketManagement from './pages/TicketManagement';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
+import AuditLogs from './pages/AuditLogs';
 
 function PublicRoute({ children }) {
   const { user, loading } = useAuth();
@@ -49,6 +50,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
             <UserManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/audit"
+        element={
+          <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+            <AuditLogs />
           </ProtectedRoute>
         }
       />
