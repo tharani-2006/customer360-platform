@@ -51,7 +51,8 @@ customer360/
 cd backend
 npm install
 # Create .env with MONGO_URI and JWT_SECRET
-npm run dev        # Starts on http://localhost:5000
+npm run dev        
+# Starts on http://localhost:5000
 ```
 
 ### 2. Frontend
@@ -59,7 +60,8 @@ npm run dev        # Starts on http://localhost:5000
 ```bash
 cd frontend
 npm install
-npm run dev        # Starts on http://localhost:5173
+npm run dev        
+# Starts on http://localhost:5173
 ```
 
 ---
@@ -113,3 +115,4 @@ MONGO_URI=mongodb://localhost:27017/customer360
 JWT_SECRET=your_secret_key
 PORT=5000
 ```
+
