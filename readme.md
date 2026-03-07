@@ -291,10 +291,10 @@ All API routes are prefixed with `/api`. Authentication is required for all rout
 ### Users
 
 | Method | Endpoint | Access | Description |
-|---|---|---|---|
-| `GET` | `/api/users` | Admin | List all system users |
+|  ---  |  --- |  ---  |---|
+| `GET`  | `/api/users` | Admin | List all system users |
 | `POST` | `/api/users` | Admin | Create a new user |
-| `PUT` | `/api/users/:id` | Admin | Update user details |
+| `PUT`  | `/api/users/:id` | Admin | Update user details |
 | `DELETE` | `/api/users/:id` | Admin | Deactivate a user |
 
 ### Customers
@@ -457,7 +457,3 @@ This project is licensed under the **ISC License**.
 See the [LICENSE](./LICENSE) file for details.
 
 ---
-
-<p align="center">
-  Built with ❤️ for modern customer relationship management.
-</p>
