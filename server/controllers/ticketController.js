@@ -1,6 +1,7 @@
 const { Ticket, TICKET_STATUS } = require('../models/Ticket');
 const { Customer } = require('../models/Customer');
 const User = require('../models/User');
+const logActivity = require('../utils/logActivity');
 
 const toTicketResponse = (t, customerPopulated, assignedEngineerPopulated) => ({
   id: t._id,
@@ -111,6 +112,12 @@ const createTicket = async (req, res, next) => {
       .populate('assignedEngineer', 'fullName email')
       .lean();
 
+    await logActivity(req.user._id, 'CREATE_TICKET', 'Ticket Management', {
+      ticketId: created._id,
+      title: created.title,
+      customerId: created.customer._id
+    });
+
     res.status(201).json({
       success: true,
       data: { ticket: toTicketResponse(created, created.customer, created.assignedEngineer) },
@@ -166,6 +173,12 @@ const updateTicket = async (req, res, next) => {
       .populate('assignedEngineer', 'fullName email')
       .lean();
 
+    await logActivity(req.user._id, 'UPDATE_TICKET', 'Ticket Management', {
+      ticketId: updated._id,
+      title: updated.title,
+      updatedFields: Object.keys(update)
+    });
+
     res.status(200).json({
       success: true,
       data: { ticket: toTicketResponse(updated, updated.customer, updated.assignedEngineer) },
@@ -215,6 +228,11 @@ const deleteTicket = async (req, res, next) => {
     if (!deleted) {
       return res.status(404).json({ success: false, message: 'Ticket not found.' });
     }
+
+    await logActivity(req.user._id, 'DELETE_TICKET', 'Ticket Management', {
+      ticketId: id,
+      title: deleted.title
+    });
 
     res.status(200).json({
       success: true,

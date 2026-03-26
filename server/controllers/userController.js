@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { ROLES } = require('../config/constants');
+const logActivity = require('../utils/logActivity');
 
 const toUserResponse = (u) => ({
   id: u._id,
@@ -40,6 +41,13 @@ const createUser = async (req, res, next) => {
     });
 
     const created = await User.findById(user._id).select('-password').lean();
+
+    await logActivity(req.user._id, 'CREATE_USER', 'User Management', {
+      createdUserId: created._id,
+      email: created.email,
+      role: created.role
+    });
+
     res.status(201).json({
       success: true,
       data: { user: toUserResponse(created) },
@@ -77,6 +85,12 @@ const updateUser = async (req, res, next) => {
     if (!updated) {
       return res.status(404).json({ success: false, message: 'User not found.' });
     }
+
+    await logActivity(req.user._id, 'UPDATE_USER', 'User Management', {
+      updatedUserId: updated._id,
+      email: updated.email,
+      updatedFields: Object.keys(update)
+    });
 
     res.status(200).json({
       success: true,

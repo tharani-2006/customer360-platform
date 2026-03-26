@@ -1,4 +1,5 @@
 const { Customer, CUSTOMER_TAGS, ACCOUNT_STATUS } = require('../models/Customer');
+const logActivity = require('../utils/logActivity');
 
 const toCustomerResponse = (c) => ({
   id: c._id,
@@ -81,6 +82,12 @@ const createCustomer = async (req, res, next) => {
     });
 
     const created = await Customer.findById(customer._id).lean();
+
+    await logActivity(req.user._id, 'CREATE_CUSTOMER', 'Customer Management', {
+      customerId: created._id,
+      organizationName: created.organizationName
+    });
+
     res.status(201).json({
       success: true,
       data: { customer: toCustomerResponse(created) },
@@ -121,6 +128,12 @@ const updateCustomer = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Customer not found.' });
     }
 
+    await logActivity(req.user._id, 'UPDATE_CUSTOMER', 'Customer Management', {
+      customerId: updated._id,
+      organizationName: updated.organizationName,
+      updatedFields: Object.keys(update)
+    });
+
     res.status(200).json({
       success: true,
       data: { customer: toCustomerResponse(updated) },
@@ -138,6 +151,11 @@ const deleteCustomer = async (req, res, next) => {
     if (!deleted) {
       return res.status(404).json({ success: false, message: 'Customer not found.' });
     }
+
+    await logActivity(req.user._id, 'DELETE_CUSTOMER', 'Customer Management', {
+      customerId: id,
+      organizationName: deleted.organizationName
+    });
 
     res.status(200).json({
       success: true,

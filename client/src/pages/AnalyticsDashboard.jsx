@@ -25,16 +25,23 @@ const roleLabels = {
 
 function MetricCard({ title, value, subtitle, variant = 'default' }) {
   const variants = {
-    default: 'bg-surface-white border-gray-200',
-    success: 'bg-green-50/80 border-green-200',
-    warning: 'bg-amber-50/80 border-amber-200',
-    danger: 'bg-red-50/80 border-red-200',
+    default: 'bg-white border-slate-100 text-ink',
+    success: 'bg-gradient-to-br from-green-50 to-emerald-100 border-green-200 text-green-900',
+    warning: 'bg-gradient-to-br from-amber-50 to-yellow-100 border-amber-200 text-amber-900',
+    danger: 'bg-gradient-to-br from-red-50 to-rose-100 border-red-200 text-red-900',
   };
+  const valueColors = {
+    default: 'text-accent-dark',
+    success: 'text-emerald-700',
+    warning: 'text-amber-700',
+    danger: 'text-red-700',
+  };
+
   return (
-    <div className={`rounded-card p-5 border shadow-card ${variants[variant] || variants.default}`}>
-      <p className="text-sm font-medium text-ink-muted mb-1">{title}</p>
-      <p className="text-2xl font-bold text-ink">{value}</p>
-      {subtitle && <p className="text-xs text-ink-muted mt-1">{subtitle}</p>}
+    <div className={`rounded-2xl p-6 border shadow-card hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ${variants[variant] || variants.default}`}>
+      <p className="text-sm font-bold opacity-70 mb-2 uppercase tracking-wider">{title}</p>
+      <p className={`text-4xl font-black tracking-tight ${valueColors[variant] || valueColors.default}`}>{value}</p>
+      {subtitle && <p className="text-sm font-medium opacity-80 mt-3">{subtitle}</p>}
     </div>
   );
 }
@@ -120,12 +127,15 @@ export default function AnalyticsDashboard() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-6 space-y-8">
-        <div>
-          <h1 className="text-2xl font-bold text-ink mb-1">Customer Health & Analytics</h1>
-          <p className="text-ink-muted text-sm">
-            Insights into customer status, subscriptions, and support trends
-          </p>
+      <main className="max-w-7xl mx-auto p-6 pb-12 space-y-8">
+        <div className="flex items-center justify-between bg-gradient-to-r from-accent-dark via-accent-dark-light to-primary-dark p-8 rounded-2xl shadow-lg relative overflow-hidden group">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+          <div className="relative z-10 text-white">
+            <span className="inline-block py-1 px-3 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider mb-3 border border-white/30 backdrop-blur-sm">INSIGHTS</span>
+            <h1 className="text-3xl font-extrabold mb-1 tracking-tight text-white">Customer Health & Analytics</h1>
+            <p className="text-white/80 font-medium">Deep insights into organizational metrics, support SLA, and overall platform health</p>
+          </div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
         </div>
 
         {error && (
@@ -135,28 +145,29 @@ export default function AnalyticsDashboard() {
         {/* Health Score - Admin & Viewer only */}
         {hasFullView && data.healthScore !== undefined && (
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 rounded-card bg-accent-dark text-white p-6 shadow-card">
-              <h2 className="text-lg font-semibold mb-2">Overall Customer Health Score</h2>
-              <div className="flex items-end gap-4">
-                <div className="text-5xl font-bold text-primary">{data.healthScore}</div>
-                <span className="text-white/80 text-sm mb-1">/ 100</span>
+            <div className="md:col-span-2 rounded-2xl bg-gradient-to-br from-accent-dark to-primary-dark text-white p-8 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+              <h2 className="text-xl font-bold mb-4 relative z-10 text-white/90">Overall Customer Health Score</h2>
+              <div className="flex items-end gap-2 relative z-10">
+                <div className="text-7xl font-black text-white tracking-tighter drop-shadow-md">{data.healthScore}</div>
+                <span className="text-white/60 text-lg font-medium mb-2 pb-1">/ 100</span>
               </div>
-              <div className="mt-4 h-2 bg-white/20 rounded-full overflow-hidden">
+              <div className="mt-6 h-3 bg-white/10 rounded-full overflow-hidden relative z-10 shadow-inner">
                 <div
-                  className="h-full bg-primary rounded-full transition-all"
+                  className="h-full bg-gradient-to-r from-emerald-400 to-primary rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(38,178,77,0.8)]"
                   style={{ width: `${data.healthScore}%` }}
                 />
               </div>
               {data.healthBreakdown && (
-                <div className="mt-4 flex flex-wrap gap-4 text-sm">
-                  <span>Subscriptions: {data.healthBreakdown.subscription}%</span>
-                  <span>Tickets: {data.healthBreakdown.tickets}%</span>
-                  <span>Customers: {data.healthBreakdown.customers}%</span>
+                <div className="mt-6 flex flex-wrap gap-4 text-sm font-medium relative z-10">
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">Subscriptions: {data.healthBreakdown.subscription}%</span>
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">Tickets: {data.healthBreakdown.tickets}%</span>
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">Customers: {data.healthBreakdown.customers}%</span>
                 </div>
               )}
             </div>
             {data.sla && (
-              <div className="rounded-card bg-surface-white border border-gray-200 p-6 shadow-card">
+              <div className="rounded-2xl bg-white border border-slate-100 p-8 shadow-card hover:shadow-lg transition-shadow">
                 <h2 className="text-lg font-semibold text-ink mb-4">SLA Performance</h2>
                 <MetricCard
                   title="SLA Breached"
@@ -213,7 +224,7 @@ export default function AnalyticsDashboard() {
 
         {/* Charts - Admin & Viewer only */}
         {hasFullView && data.resolutionTrends && data.resolutionTrends.length > 0 && (
-          <div className="rounded-card bg-surface-white border border-gray-200 p-6 shadow-card">
+          <div className="rounded-2xl bg-white border border-slate-100 p-8 shadow-card hover:shadow-lg transition-shadow">
             <h2 className="text-lg font-semibold text-ink mb-4">Resolution Time Trends (Avg Hours)</h2>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -231,7 +242,7 @@ export default function AnalyticsDashboard() {
 
         {/* Pie charts */}
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="rounded-card bg-surface-white border border-gray-200 p-6 shadow-card">
+          <div className="rounded-2xl bg-white border border-slate-100 p-8 shadow-card hover:shadow-lg transition-shadow">
             <h2 className="text-lg font-semibold text-ink mb-4">Subscriptions by Status</h2>
             {subscriptionPieData.length > 0 ? (
               <div className="h-64">
@@ -259,7 +270,7 @@ export default function AnalyticsDashboard() {
               <p className="text-ink-muted text-sm py-8">No subscription data yet.</p>
             )}
           </div>
-          <div className="rounded-card bg-surface-white border border-gray-200 p-6 shadow-card">
+          <div className="rounded-2xl bg-white border border-slate-100 p-8 shadow-card hover:shadow-lg transition-shadow">
             <h2 className="text-lg font-semibold text-ink mb-4">Tickets by Status</h2>
             {ticketPieData.length > 0 ? (
               <div className="h-64">

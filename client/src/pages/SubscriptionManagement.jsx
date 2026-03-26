@@ -236,20 +236,23 @@ export default function SubscriptionManagement() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-ink mb-1">Subscriptions</h1>
-            <p className="text-ink-muted text-sm">Track plans, dates, status and usage</p>
+      <main className="max-w-7xl mx-auto p-6 pb-12">
+        <div className="flex items-center justify-between mb-8 bg-gradient-to-r from-accent-dark via-accent-dark-light to-primary-dark p-8 rounded-2xl shadow-lg relative overflow-hidden group">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+          <div className="relative z-10 text-white">
+            <span className="inline-block py-1 px-3 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider mb-3 border border-white/30 backdrop-blur-sm">BILLING & PLANS</span>
+            <h1 className="text-3xl font-extrabold mb-1 tracking-tight text-white">Subscriptions</h1>
+            <p className="text-white/80 font-medium">Track recurring plans, active dates, statuses and API usage</p>
           </div>
           {isAdmin && (
-            <button onClick={() => setShowCreate(true)} className="btn-primary">
-              Assign Subscription
+            <button onClick={() => setShowCreate(true)} className="relative z-10 bg-white text-accent-dark font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              + Assign Subscription
             </button>
           )}
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
         </div>
 
-        <div className="mb-6 p-4 bg-surface-white rounded-card shadow-card">
+        <div className="mb-8 p-6 bg-white rounded-2xl shadow-card border border-slate-100 hover:shadow-lg transition-shadow duration-300">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink mb-1">Customer</label>
@@ -288,7 +291,8 @@ export default function SubscriptionManagement() {
         )}
 
         {(showCreate || editingId || viewingId) && (
-          <div className="mb-6 p-6 bg-surface-white rounded-card shadow-card border border-gray-100">
+          <div className="mb-8 p-8 bg-white rounded-2xl shadow-2xl border border-primary/20 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent-dark"></div>
             <h2 className="text-lg font-semibold text-ink mb-4">
               {viewingId ? 'View Subscription' : editingId ? 'Update Subscription' : 'Assign Subscription'}
             </h2>
@@ -435,7 +439,7 @@ export default function SubscriptionManagement() {
           </div>
         )}
 
-        <div className="bg-surface-white rounded-card shadow-card overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-card border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
           {loading ? (
             <div className="p-12 text-center text-ink-muted">Loading subscriptions...</div>
           ) : subscriptions.length === 0 ? (
@@ -446,19 +450,19 @@ export default function SubscriptionManagement() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 bg-surface-gray/50">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Customer</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Plan</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Start</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">End</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Status</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Usage summary</th>
-                    <th className="text-right py-4 px-6 text-sm font-semibold text-ink">Actions</th>
+                  <tr className="border-b border-gray-100 bg-slate-50 text-xs uppercase tracking-wider text-ink-muted">
+                    <th className="text-left py-4 px-6 font-bold">Customer</th>
+                    <th className="text-left py-4 px-6 font-bold">Plan</th>
+                    <th className="text-left py-4 px-6 font-bold">Start</th>
+                    <th className="text-left py-4 px-6 font-bold">End</th>
+                    <th className="text-left py-4 px-6 font-bold">Status</th>
+                    <th className="text-left py-4 px-6 font-bold">Usage summary</th>
+                    <th className="text-right py-4 px-6 font-bold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {subscriptions.map((s) => (
-                    <tr key={s.id} className="border-b border-gray-100 hover:bg-surface-gray/30">
+                    <tr key={s.id} className="border-b border-gray-50 hover:bg-slate-50/80 transition-colors group">
                       <td className="py-4 px-6 text-ink font-medium">
                         {s.customerName || s.customer || '-'}
                       </td>
@@ -467,15 +471,14 @@ export default function SubscriptionManagement() {
                       <td className="py-4 px-6 text-ink-muted text-sm">{formatDate(s.endDate)}</td>
                       <td className="py-4 px-6">
                         <span
-                          className={`inline-flex px-2 py-1 rounded-badge text-xs font-medium ${
-                            s.subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE
+                          className={`inline-flex px-2 py-1 rounded-badge text-xs font-medium ${s.subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE
                               ? 'bg-green-100 text-green-700'
                               : s.subscriptionStatus === SUBSCRIPTION_STATUS.EXPIRED
                                 ? 'bg-gray-100 text-gray-600'
                                 : s.subscriptionStatus === SUBSCRIPTION_STATUS.CANCELLED
                                   ? 'bg-red-100 text-red-700'
                                   : 'bg-amber-100 text-amber-700'
-                          }`}
+                            }`}
                         >
                           {s.subscriptionStatus}
                         </span>

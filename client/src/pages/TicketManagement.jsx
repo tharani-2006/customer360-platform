@@ -335,21 +335,24 @@ export default function TicketManagement() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-ink mb-1">Support Tickets</h1>
-            <p className="text-ink-muted text-sm">Manage customer support issues and incidents</p>
+      <main className="max-w-7xl mx-auto p-6 pb-12">
+        <div className="flex items-center justify-between mb-8 bg-gradient-to-r from-accent-dark via-accent-dark-light to-primary-dark p-8 rounded-2xl shadow-lg relative overflow-hidden group">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+          <div className="relative z-10 text-white">
+            <span className="inline-block py-1 px-3 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider mb-3 border border-white/30 backdrop-blur-sm">SUPPORT CENTER</span>
+            <h1 className="text-3xl font-extrabold mb-1 tracking-tight text-white">Support Tickets</h1>
+            <p className="text-white/80 font-medium">Manage issues, track resolutions, and monitor incident SLA</p>
           </div>
           {canEdit && (
-            <button onClick={() => setShowCreate(true)} className="btn-primary">
-              Create Ticket
+            <button onClick={() => setShowCreate(true)} className="relative z-10 bg-white text-accent-dark font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              + Create Ticket
             </button>
           )}
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
         </div>
 
         {/* Filters */}
-        <div className="mb-6 p-4 bg-surface-white rounded-card shadow-card">
+        <div className="mb-8 p-6 bg-white rounded-2xl shadow-card border border-slate-100 hover:shadow-lg transition-shadow duration-300">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink mb-1">Customer</label>
@@ -418,7 +421,8 @@ export default function TicketManagement() {
 
         {/* Create/Edit/View Form */}
         {(showCreate || editingId || viewingId) && (
-          <div className="mb-6 p-6 bg-surface-white rounded-card shadow-card border border-gray-100">
+          <div className="mb-8 p-8 bg-white rounded-2xl shadow-2xl border border-primary/20 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent-dark"></div>
             <h2 className="text-lg font-semibold text-ink mb-4">
               {viewingId ? 'View Ticket' : editingId ? 'Edit Ticket' : 'Create New Ticket'}
             </h2>
@@ -532,12 +536,12 @@ export default function TicketManagement() {
 
               {/* Comments Section */}
               {(viewingId || editingId) && currentTicket && (
-                <div className="border-t border-gray-200 pt-4 mt-4">
+                <div className="border-t border-slate-100 pt-6 mt-6">
                   <h3 className="text-sm font-semibold text-ink mb-3">Comments</h3>
                   <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
                     {currentTicket.comments && currentTicket.comments.length > 0 ? (
                       currentTicket.comments.map((comment) => (
-                        <div key={comment.id} className="p-3 bg-surface-gray rounded-button">
+                        <div key={comment.id} className="p-4 bg-slate-50 border border-slate-100 rounded-xl hover:shadow-sm transition-shadow">
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-sm font-medium text-ink">{comment.authorName}</span>
                             <span className="text-xs text-ink-muted">{formatDateTime(comment.createdAt)}</span>
@@ -589,7 +593,7 @@ export default function TicketManagement() {
         )}
 
         {/* Tickets List */}
-        <div className="bg-surface-white rounded-card shadow-card overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-card border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
           {loading ? (
             <div className="p-12 text-center text-ink-muted">Loading tickets...</div>
           ) : tickets.length === 0 ? (
@@ -600,21 +604,21 @@ export default function TicketManagement() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 bg-surface-gray/50">
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">ID</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Customer</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Title</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Priority</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Severity</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Status</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Assigned</th>
-                    <th className="text-left py-4 px-6 text-sm font-semibold text-ink">Created</th>
-                    <th className="text-right py-4 px-6 text-sm font-semibold text-ink">Actions</th>
+                  <tr className="border-b border-gray-100 bg-slate-50 text-xs uppercase tracking-wider text-ink-muted">
+                    <th className="text-left py-4 px-6 font-bold">ID</th>
+                    <th className="text-left py-4 px-6 font-bold">Customer</th>
+                    <th className="text-left py-4 px-6 font-bold">Title</th>
+                    <th className="text-left py-4 px-6 font-bold">Priority</th>
+                    <th className="text-left py-4 px-6 font-bold">Severity</th>
+                    <th className="text-left py-4 px-6 font-bold">Status</th>
+                    <th className="text-left py-4 px-6 font-bold">Assigned</th>
+                    <th className="text-left py-4 px-6 font-bold">Created</th>
+                    <th className="text-right py-4 px-6 font-bold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tickets.map((t) => (
-                    <tr key={t.id} className="border-b border-gray-100 hover:bg-surface-gray/30">
+                    <tr key={t.id} className="border-b border-gray-50 hover:bg-slate-50/80 transition-colors group">
                       <td className="py-4 px-6 text-ink-muted text-xs font-mono">{t.id.slice(-8)}</td>
                       <td className="py-4 px-6 text-ink font-medium text-sm">{t.customerName || '-'}</td>
                       <td className="py-4 px-6">
