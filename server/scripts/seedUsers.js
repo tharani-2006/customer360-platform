@@ -1,5 +1,5 @@
-app.use('/api/subscriptions', subscriptionRoutes);
-app.use('/api/tickets', ticketRoutes);require('dotenv').config();
+
+require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const { ROLES } = require('../config/constants');
